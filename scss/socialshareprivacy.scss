@@ -1,0 +1,356 @@
+// Settings
+
+$ssp-image-path: '../images' !default;
+$ssp-global-radius: 4px !default;
+$ssp-global-border-color: #e7e3e3 !default;
+$ssp-global-shadow-color: #c1c1c1 !default;
+$ssp-infowindow-background: #fdfbec !default;
+$ssp-infowindow-border-color: #ccc !default;
+$ssp-infowindow-width: 290px !default;
+$ssp-infowindow-color: #000 !default;
+$ssp-infowindow-font-size: 12px !default;
+$ssp-infowindow-shadow-color: #999 !default;
+
+// Mix-Ins
+@mixin help-info() {
+  display: none;
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  width: $ssp-infowindow-width;
+  padding: 10px 15px;
+  margin: 0;
+  font-size: $ssp-infowindow-font-size;
+  line-height: 16px;
+  font-weight: bold;
+  border: 1px solid $ssp-infowindow-border-color;
+  -moz-border-radius: $ssp-global-radius;
+  -webkit-border-radius: $ssp-global-radius;
+  border-radius: $ssp-global-radius;
+  -moz-box-shadow: 0 3px 4px $ssp-infowindow-shadow-color;
+  -webkit-box-shadow: 0 3px 4px $ssp-infowindow-shadow-color;
+  box-shadow: 0 3px 4px $ssp-infowindow-shadow-color;
+  background-color: $ssp-infowindow-background;
+  color: $ssp-infowindow-color;
+  z-index: 500;
+}
+
+
+// General styles
+.social_share_privacy_area {
+
+  & * {
+	-ms-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+  }
+
+  clear: both;
+  margin: 20px 0 !important;
+  list-style-type: none;
+  padding: 0 !important;
+  width: auto;
+  height: 25px;
+  display: block;
+
+  li {
+	margin: 0 !important;
+	padding: 0 !important;
+	height: 21px;
+	float: left;
+
+	.dummy_btn {
+	  float: left;
+	  margin: 0 0 0 10px;
+	  cursor: pointer;
+	  padding: 0;
+	  height: inherit;
+	}
+	div iframe {
+	  overflow: hidden;
+	  height: inherit;
+	  width: inherit;
+	}
+
+	div.tweet {
+	  width: 115px;
+	}
+
+	div.gplusone {
+	  width: 90px;
+	}
+
+	.switch {
+	  display: inline-block;
+	  text-indent: -9999em;
+	  background: transparent url(#{$ssp-image-path}/ssp_sprite.png) no-repeat -70px -40px scroll;
+	  width: 23px;
+	  height: 12px;
+	  overflow: hidden;
+	  float: left;
+	  margin: 4px 0 0;
+	  padding: 0;
+	  cursor: pointer;
+	  &.on {
+		  background-position: -70px -52px;
+	  }
+	}
+	&.help_info {
+	  position: relative;
+
+	  .info {
+		@include help-info();
+	  }
+	  &.display .info {
+		display: block;
+	  }
+	  &.info_off.display .info {
+		display: none;
+	  }
+	}
+
+	.help_info {
+	  .info {
+		@include help-info();
+	  }
+
+	  &.icon {
+		.info {
+		  left: -243px;
+		  width: 350px;
+		}
+		&.display {
+		  .info {
+			display: block;
+		  }
+		}
+
+		background: #fff url(#{$ssp-image-path}/ssp_sprite.png) no-repeat -93px -41px scroll;
+		width: 25px;
+		height: 20px;
+		position: relative;
+		display: inline-block;
+		vertical-align: top;
+		border: 2px solid $ssp-infowindow-border-color;
+		border-right-width: 0;
+		-moz-border-radius: $ssp-global-radius 0 0 $ssp-global-radius;
+		-webkit-border-radius: $ssp-global-radius 0 0 $ssp-global-radius;
+		border-radius: $ssp-global-radius 0 0 $ssp-global-radius;
+		margin: 0;
+		padding: 0;
+	  }
+
+	}
+
+
+	&.settings_info {
+
+	  position: relative;
+	  top: -2px;
+
+	  .settings_info_menu {
+
+		background-color: #f3f4f5;
+		border: 2px solid $ssp-global-border-color;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+		-moz-box-shadow: 2px 2px 3px $ssp-global-shadow-color;
+		-webkit-box-shadow: 2px 2px 3px $ssp-global-shadow-color;
+		box-shadow: 3px 3px 3px $ssp-global-shadow-color;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 135px;
+		z-index: 1000;
+		margin: 0;
+		padding: 0;
+
+		&.on {
+		  .help_info.icon {
+			border-top-width: 0;
+			border-left-width: 0;
+		  }
+
+		  .settings {
+			border-top-width: 0;
+		  }
+		}
+
+		&.off {
+		  border-width: 0;
+		  -moz-box-shadow: none;
+		  -webkit-box-shadow: none;
+		  box-shadow: none;
+		  background-color: transparent;
+
+		  form {
+			display: none;
+			margin: 0;
+			padding: 0;
+		  }
+
+		}
+
+		&.perma_option_off .help_info.icon {
+		  border-right-width: 2px;
+		  -moz-border-radius: 5px;
+		  -webkit-border-radius: 5px;
+		  border-radius: 5px;
+		}
+
+		.settings {
+		  text-indent: -9999em;
+		  display: inline-block;
+		  background: #fff url(#{$ssp-image-path}/ssp_sprite.png) no-repeat -35px -40px scroll;
+		  width: 25px;
+		  height: 20px;
+		  border: 2px solid $ssp-global-border-color;
+		  -moz-border-radius: 0 5px 5px 0;
+		  -webkit-border-radius: 0 5px 5px 0;
+		  border-radius: 0 5px 5px 0;
+		  border-left: 1px solid #ddd;
+		  margin: 0;
+		  padding: 0;
+		}
+
+		form  {
+		  margin: 0;
+
+		  fieldset {
+			border-width: 0;
+			margin: 0;
+			padding: 0 10px 10px;
+
+			legend {
+			  font-size: 11px;
+			  font-weight: bold;
+			  line-height: 14px;
+			  margin: 0;
+			  padding: 10px 0;
+			  width: 115px;
+			}
+			input {
+			  clear: both;
+			  float: left;
+			  margin: 4px 10px 4px 0;
+			  padding: 0;
+			}
+
+			label {
+			  display: inline-block;
+			  float: left;
+			  font-size: 12px;
+			  font-weight: bold;
+			  line-height: 24px;
+			  -moz-transition: color .5s ease-in;
+			  -webkit-transition: color .5s ease-in;
+			  transition: color .5s ease-in;
+			  margin: 0;
+			  padding: 0;
+
+			  &.checked {
+				color: #090;
+			  }
+			}
+		  }
+		}
+
+	  }
+	  a {
+		text-decoration: none;
+		margin: 0 !important;
+	  }
+	}
+  }
+  .start, .center, .end, .label {
+	display:inline-block;
+	vertical-align:top;
+	zoom:1;
+	*display:inline;
+  }
+
+  /* Facebook begin */
+  .facebook {
+	width: 180px;
+	display: inline-block;
+
+	.fb_like {
+	  iframe {
+		width: 145px;
+	  }
+	}
+  }
+
+  div.fb_like_privacy_dummy {
+	height:20px;
+	padding-left:15px;
+	background:url(#{$ssp-image-path}/ssp_sprite.png) no-repeat 0 -20px;
+
+	span {
+	  height:17px;
+	  padding-top:3px;
+	  display:block;
+	  padding-right:5px;
+	  position:relative;
+	  left:5px;
+	  font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+	  font-size: 11px;
+	  line-height: 15px;
+	  background:url(#{$ssp-image-path}/ssp_sprite.png) no-repeat 100% -20px;
+	  color:#575757;
+	}
+  }
+  /* Facebook end */
+
+
+  /* Twitter begin */
+  .twitter {
+	width: 148px;
+  }
+
+  div.tweet_this_dummy {
+	float:left;
+	height:20px;
+	padding-left:15px;
+	background:url(#{$ssp-image-path}/ssp_sprite.png) no-repeat top left;
+
+	span {
+	  float:left;
+	  height:17px;
+	  padding-top:3px;
+	  display:block;
+	  padding-right:5px;
+	  position:relative;
+	  left:5px;
+	  font-family: 'Helvetica Neue', Arial, sans-serif;
+	  font-size:11px;
+	  line-height: 15px;
+	  font-weight:bold;
+	  color:#373737;
+	  background:url(#{$ssp-image-path}/ssp_sprite.png) no-repeat top right;
+	}
+  }
+  /* Twitter end */
+
+  /* Google+ begin */
+  .gplus {
+	width: 123px;
+  }
+
+  div.gplus_one_dummy {
+	background: transparent url(#{$ssp-image-path}/ssp_sprite.png) no-repeat 0 -40px;
+	width: 32px;
+	height: 20px;
+	border: 0;
+	text-indent: -999em;
+	overflow: hidden;
+	text-align: left;
+	direction: ltr;
+	*line-height: 0;
+  }
+  /* Google+ end */
+}
+
+
