@@ -1,7 +1,9 @@
 // Settings
 
 $ssp-image-path: '../images' !default;
-$ssp-global-radius: 4px !default;
+$ssp-font-path: '../fonts' !default;
+$ssp-font-family: 'icomoon' !default;
+$ssp-global-radius: 5px !default;
 $ssp-global-border-color: #e7e3e3 !default;
 $ssp-global-shadow-color: #c1c1c1 !default;
 $ssp-infowindow-background: #fdfbec !default;
@@ -10,6 +12,74 @@ $ssp-infowindow-width: 290px !default;
 $ssp-infowindow-color: #000 !default;
 $ssp-infowindow-font-size: 12px !default;
 $ssp-infowindow-shadow-color: #999 !default;
+$ssp-dummy-button-background: #eee !default;
+$ssp-dummy-button-color: #666 !default;
+$ssp-dummy-button-padding: 3px 5px !default;
+$ssp-dummy-button-font-size: 12px !default;
+$ssp-dummy-button-font-weight: bold !default;
+$ssp-dummy-button-border: transparent !default;
+$ssp-switch-height: 21px !default;
+$ssp-switch-color: #fefefe !default;
+$ssp-switch-active-color: #1779ba !default;
+$ssp-switch-paddle-color: #fefefe !default;
+
+$ssp-infobutton-background: $ssp-dummy-button-background;
+$ssp-infobutton-color: $ssp-dummy-button-color;
+$ssp-infobutton-border: $ssp-dummy-button-border;
+$ssp-settingsinfo-padding: 4px 7px;
+
+$ssp-settingsbutton-color: $ssp-dummy-button-color;
+
+$ssp-switch-width: $ssp-switch-height * 2;
+$ssp-paddle-height: $ssp-switch-height - 8px;
+$ssp-paddle-width: $ssp-switch-height - 8px;
+
+$ssp-flex-breakpoint: 600px;
+
+
+// generated icomoon fonts - contains Facebook, Twitter and Google+
+
+@font-face {
+  font-family: $ssp-font-family;
+  src:  url('#{$ssp-font-path}/icomoon.eot?gimvlw');
+  src:  url('#{$ssp-font-path}/icomoon.eot?gimvlw#iefix') format('embedded-opentype'),
+  url('#{$ssp-font-path}/icomoon.ttf?gimvlw') format('truetype'),
+  url('#{$ssp-font-path}/icomoon.woff?gimvlw') format('woff'),
+  url('#{$ssp-font-path}/icomoon.svg?gimvlw#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: $ssp-font-family !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-facebook:before {
+  content: "\e900";
+}
+.icon-google-plus:before {
+  content: "\e901";
+}
+.icon-twitter:before {
+  content: "\e902";
+}
+.icon-cog:before {
+  content: "\e904";
+}
+.icon-info:before {
+  content: "\e903";
+}
 
 // Mix-Ins
 @mixin help-info() {
@@ -23,7 +93,7 @@ $ssp-infowindow-shadow-color: #999 !default;
   font-size: $ssp-infowindow-font-size;
   line-height: 16px;
   font-weight: bold;
-  border: 1px solid $ssp-infowindow-border-color;
+  border: 1px solid $ssp-infobutton-border;
   -moz-border-radius: $ssp-global-radius;
   -webkit-border-radius: $ssp-global-radius;
   border-radius: $ssp-global-radius;
@@ -39,24 +109,24 @@ $ssp-infowindow-shadow-color: #999 !default;
 // General styles
 .social_share_privacy_area {
 
-  & * {
-	-ms-box-sizing: content-box;
-	-webkit-box-sizing: content-box;
-	-moz-box-sizing: content-box;
-	box-sizing: content-box;
-  }
-
   clear: both;
   margin: 20px 0 !important;
   list-style-type: none;
   padding: 0 !important;
   width: auto;
-  height: 25px;
-  display: block;
+  @media screen and (min-width: $ssp-flex-breakpoint) {
+	display: flex;
+	justify-content: space-between;
+  }
+
 
   li {
-	margin: 0 !important;
-	padding: 0 !important;
+
+	@media screen and (max-width: $ssp-flex-breakpoint) {
+	  margin-right: 20px;
+	  margin-bottom: 20px;
+	}
+
 	height: 21px;
 	float: left;
 
@@ -73,27 +143,70 @@ $ssp-infowindow-shadow-color: #999 !default;
 	  width: inherit;
 	}
 
-	div.tweet {
-	  width: 115px;
-	}
-
-	div.gplusone {
-	  width: 90px;
-	}
-
 	.switch {
 	  display: inline-block;
-	  text-indent: -9999em;
-	  background: transparent url(#{$ssp-image-path}/ssp_sprite.png) no-repeat -70px -40px scroll;
-	  width: 23px;
-	  height: 12px;
 	  overflow: hidden;
 	  float: left;
-	  margin: 4px 0 0;
 	  padding: 0;
 	  cursor: pointer;
-	  &.on {
-		  background-position: -70px -52px;
+
+	  position: relative;
+	  outline: 0;
+	  color: $ssp-switch-color;
+	  user-select: none;
+
+	  .switch-input {
+		position: absolute;
+		margin-bottom: 0;
+		opacity: 0;
+
+		&:checked {
+		  ~ .switch-paddle {
+			background: $ssp-switch-active-color;
+
+			&:after {
+			  left: $ssp-switch-width - $ssp-paddle-width - 4px;
+			}
+
+		  }
+		}
+		+ label {
+		  cursor: pointer;
+		  display: inline-block;
+		  vertical-align: baseline;
+		  margin: 0;
+		}
+	  }
+
+	  .switch-paddle {
+		width: $ssp-switch-width;
+		height: $ssp-switch-height;
+
+		.show-for-sr {
+		  position: absolute !important;
+		  width: 1px;
+		  height: 1px;
+		  padding: 0;
+		  overflow: hidden;
+		  clip: rect(0, 0, 0, 0);
+		  white-space: nowrap;
+		  clip-path: inset(50%);
+		  border: 0;
+		}
+
+		&:after {
+		  position: absolute;
+		  top: 4px;
+		  left: 4px;
+		  display: block;
+		  width: $ssp-paddle-width;
+		  height: $ssp-paddle-height;
+		  transform: translate3d(0, 0, 0);
+		  border-radius: 0;
+		  background: $ssp-switch-paddle-color;
+		  transition: all 0.25s ease-out;
+		  content: '';
+		}
 	  }
 	}
 	&.help_info {
@@ -126,19 +239,19 @@ $ssp-infowindow-shadow-color: #999 !default;
 		  }
 		}
 
-		background: #fff url(#{$ssp-image-path}/ssp_sprite.png) no-repeat -93px -41px scroll;
-		width: 25px;
-		height: 20px;
+		background-color: $ssp-infobutton-background;
+		color: $ssp-infobutton-color;
+
 		position: relative;
-		display: inline-block;
-		vertical-align: top;
-		border: 2px solid $ssp-infowindow-border-color;
+		display: inline-flex;
+		border: 1px solid $ssp-dummy-button-border;
 		border-right-width: 0;
 		-moz-border-radius: $ssp-global-radius 0 0 $ssp-global-radius;
 		-webkit-border-radius: $ssp-global-radius 0 0 $ssp-global-radius;
 		border-radius: $ssp-global-radius 0 0 $ssp-global-radius;
 		margin: 0;
-		padding: 0;
+		padding: $ssp-settingsinfo-padding;
+		font-size: $ssp-dummy-button-font-size;
 	  }
 
 	}
@@ -149,21 +262,24 @@ $ssp-infowindow-shadow-color: #999 !default;
 	  position: relative;
 	  top: -2px;
 
-	  .settings_info_menu {
+	  @media screen and (min-width: 630px) {
+		top: -7px;
+	  }
 
-		background-color: #f3f4f5;
-		border: 2px solid $ssp-global-border-color;
-		-moz-border-radius: 5px;
-		-webkit-border-radius: 5px;
-		border-radius: 5px;
-		-moz-box-shadow: 2px 2px 3px $ssp-global-shadow-color;
-		-webkit-box-shadow: 2px 2px 3px $ssp-global-shadow-color;
-		box-shadow: 3px 3px 3px $ssp-global-shadow-color;
+	  .settings_info_menu {
+		display: block;
+
+		background-color: $ssp-infobutton-background;
+		border: 1px solid $ssp-infobutton-border;
+		-moz-border-radius: $ssp-global-radius;
+		-webkit-border-radius: $ssp-global-radius;
+		border-radius: $ssp-global-radius;
+
 		left: 0;
-		position: absolute;
+
 		top: 0;
 		width: 135px;
-		z-index: 1000;
+
 		margin: 0;
 		padding: 0;
 
@@ -193,26 +309,21 @@ $ssp-infowindow-shadow-color: #999 !default;
 
 		}
 
-		&.perma_option_off .help_info.icon {
-		  border-right-width: 2px;
-		  -moz-border-radius: 5px;
-		  -webkit-border-radius: 5px;
-		  border-radius: 5px;
-		}
 
 		.settings {
-		  text-indent: -9999em;
-		  display: inline-block;
-		  background: #fff url(#{$ssp-image-path}/ssp_sprite.png) no-repeat -35px -40px scroll;
-		  width: 25px;
-		  height: 20px;
-		  border: 2px solid $ssp-global-border-color;
-		  -moz-border-radius: 0 5px 5px 0;
-		  -webkit-border-radius: 0 5px 5px 0;
-		  border-radius: 0 5px 5px 0;
+		  display: inline-flex;
+		//  background: #fff url(#{$ssp-image-path}/ssp_sprite.png) no-repeat -35px -40px scroll;
+		  border: 1px solid $ssp-infobutton-border;
+
+
 		  border-left: 1px solid #ddd;
 		  margin: 0;
-		  padding: 0;
+		  padding: $ssp-settingsinfo-padding;
+		  background-color: $ssp-dummy-button-background;
+		  .icon-cog {
+			font-size: $ssp-dummy-button-font-size;
+			color: $ssp-settingsbutton-color;
+		  }
 		}
 
 		form  {
@@ -263,6 +374,27 @@ $ssp-infowindow-shadow-color: #999 !default;
 		margin: 0 !important;
 	  }
 	}
+
+	.button {
+
+	  display: inline-block;
+	  vertical-align: middle;
+	  margin: 0 0 1rem 0;
+	  font-family: inherit;
+	  -webkit-appearance: none;
+	  border: 1px solid $ssp-dummy-button-border;
+	  border-radius: $ssp-global-radius;
+	  transition: background-color 0.25s ease-out, color 0.25s ease-out;
+	  line-height: 1;
+	  text-align: center;
+	  cursor: pointer;
+
+	  background-color: $ssp-dummy-button-background;
+	  color: $ssp-dummy-button-color;
+	  font-size: $ssp-dummy-button-font-size;
+	  font-weight: $ssp-dummy-button-font-weight;
+	  padding: $ssp-dummy-button-padding;
+	}
   }
   .start, .center, .end, .label {
 	display:inline-block;
@@ -273,7 +405,6 @@ $ssp-infowindow-shadow-color: #999 !default;
 
   /* Facebook begin */
   .facebook {
-	width: 180px;
 	display: inline-block;
 
 	.fb_like {
@@ -286,7 +417,6 @@ $ssp-infowindow-shadow-color: #999 !default;
   div.fb_like_privacy_dummy {
 	height:20px;
 	padding-left:15px;
-	background:url(#{$ssp-image-path}/ssp_sprite.png) no-repeat 0 -20px;
 
 	span {
 	  height:17px;
@@ -298,7 +428,6 @@ $ssp-infowindow-shadow-color: #999 !default;
 	  font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
 	  font-size: 11px;
 	  line-height: 15px;
-	  background:url(#{$ssp-image-path}/ssp_sprite.png) no-repeat 100% -20px;
 	  color:#575757;
 	}
   }
@@ -306,15 +435,10 @@ $ssp-infowindow-shadow-color: #999 !default;
 
 
   /* Twitter begin */
-  .twitter {
-	width: 148px;
-  }
-
   div.tweet_this_dummy {
 	float:left;
 	height:20px;
 	padding-left:15px;
-	background:url(#{$ssp-image-path}/ssp_sprite.png) no-repeat top left;
 
 	span {
 	  float:left;
@@ -329,18 +453,14 @@ $ssp-infowindow-shadow-color: #999 !default;
 	  line-height: 15px;
 	  font-weight:bold;
 	  color:#373737;
-	  background:url(#{$ssp-image-path}/ssp_sprite.png) no-repeat top right;
 	}
   }
   /* Twitter end */
 
   /* Google+ begin */
-  .gplus {
-	width: 123px;
-  }
+
 
   div.gplus_one_dummy {
-	background: transparent url(#{$ssp-image-path}/ssp_sprite.png) no-repeat 0 -40px;
 	width: 32px;
 	height: 20px;
 	border: 0;
@@ -351,6 +471,11 @@ $ssp-infowindow-shadow-color: #999 !default;
 	*line-height: 0;
   }
   /* Google+ end */
+}
+
+.gplusone iframe {
+  position: relative !important;
+  top: -2px !important;
 }
 
 

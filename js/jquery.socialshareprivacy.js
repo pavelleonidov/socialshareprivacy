@@ -205,6 +205,30 @@
                 uri = uri(context);
             }
 
+            var switchContainer =
+                '<div class="switch off">' +
+                    '<input class="switch-input" id="switch" type="checkbox" name="ssp-switch"> ' +
+                    '<label class="switch-paddle" for="switch"> ' +
+                        '<span class="show-for-sr" /> ' +
+                    '</label>' +
+                '</div>';
+
+            var $switchFB = $(switchContainer).clone();
+                $switchFB.find('input').attr('id', 'switch-fb').attr('name', 'switch-fb');
+                $switchFB.find('label').attr('for', 'switch-fb');
+                $switchFB.find('.show-for-sr').append(options.services.facebook.txt_fb_off);
+
+
+            var $switchTwitter = $(switchContainer).clone();
+                $switchTwitter.find('input').attr('id', 'switch-twitter').attr('name', 'switch-twitter');
+                $switchTwitter.find('label').attr('for', 'switch-twitter');
+                $switchTwitter.find('.show-for-sr').append(options.services.twitter.txt_twitter_off);
+
+            var $switchGPlus = $(switchContainer).clone();
+                $switchGPlus.find('input').attr('id', 'switch-gplus').attr('name', 'switch-gplus');
+                $switchGPlus.find('label').attr('for', 'switch-gplus');
+                $switchGPlus.find('.show-for-sr').append(options.services.gplus.txt_gplus_off);
+
             //
             // Facebook
             //
@@ -212,36 +236,30 @@
                 var fb_enc_uri = encodeURIComponent(uri + options.services.facebook.referrer_track);
                 var fb_code = '<iframe src="http://www.facebook.com/plugins/like.php?locale=' +
                     options.services.facebook.language + '&amp;href=' + fb_enc_uri +
-                    '&amp;send=false&amp;layout=button_count&amp;width=120&amp;show_faces=false&amp;action=' +
+                    '&amp;send=false&amp;layout=button_count&amp;width=70&amp;show_faces=false&amp;action=' +
                     options.services.facebook.action +
-                    '&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:145px; height:21px;" allowTransparency="true"></iframe>';
-                var fb_dummy_btn;
-                if (options.services.facebook.dummy_img) {
-                    fb_dummy_btn =
-                        '<img class="fb_like_privacy_dummy" src="' + options.services.facebook.dummy_img + '" alt="' +
-                            options.services.facebook.dummy_caption + '" />';
-                }
-                else {
-                    fb_dummy_btn =
-                        '<div class="fb_like_privacy_dummy"><span>' + options.services.facebook.dummy_caption +
-                            '</span></div>';
-                }
+                    '&amp;colorscheme=light&amp;font&amp;height=25" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:145px; height:25px;" allowTransparency="true"></iframe>';
+                var fb_dummy_btn =
+                        '<button class="button"><i class="icon-facebook"></i> Empfehlen</button>';
+
                 context.append('<li class="facebook help_info"><span class="info">' +
-                    options.services.facebook.txt_info + '</span><span class="switch off">' +
-                    options.services.facebook.txt_fb_off + '</span><div class="fb_like dummy_btn">' + fb_dummy_btn +
+                    options.services.facebook.txt_info + '</span>' + $switchFB[0].outerHTML  + '<div class="fb_like dummy_btn">' +  fb_dummy_btn  + '</div>' +
                     '</div></li>');
 
                 var $container_fb = $('li.facebook', context);
 
-                context.on('click', 'li.facebook div.fb_like .fb_like_privacy_dummy,li.facebook span.switch',
+                context.on('change', 'li.facebook .switch',
                     function () {
-                        if ($container_fb.find('span.switch').hasClass('off')) {
+                        console.log($(this));
+                        if ($(this).hasClass('off')) {
                             $container_fb.addClass('info_off');
-                            $container_fb.find('span.switch').addClass('on').removeClass('off').html(options.services.facebook.txt_fb_on);
-                            $container_fb.find('.fb_like_privacy_dummy').replaceWith(fb_code);
+                            $container_fb.find('.switch').addClass('on').removeClass('off');
+                            $container_fb.find('.show-for-sr').html(options.services.facebook.txt_fb_on);
+                            $container_fb.find('button').replaceWith(fb_code);
                         } else {
                             $container_fb.removeClass('info_off');
-                            $container_fb.find('span.switch').addClass('off').removeClass('on').html(options.services.facebook.txt_fb_off);
+                            $container_fb.find('.switch').addClass('off').removeClass('on');
+                            $container_fb.find('show-for-sr').html(options.services.facebook.txt_fb_off);
                             $container_fb.find('.fb_like').html(fb_dummy_btn);
                         }
                     }
@@ -268,34 +286,26 @@
                     twitter_iframe_url = twitter_iframe_url + '&amp;via=' + options.services.twitter.tweet_via;
                 }
 
-                var twitter_code = '<iframe allowtransparency="true" frameborder="0" scrolling="no" src="' + twitter_iframe_url + '" style="width:130px; height:25px;"></iframe>';
-                var twitter_dummy_btn;
-                if (options.services.twitter.dummy_img) {
-                    twitter_dummy_btn =
-                        '<img class="tweet_this_dummy" src="' + options.services.twitter.dummy_img + '" alt="' +
-                            options.services.twitter.dummy_caption + '" />';
-                }
-                else {
-                    twitter_dummy_btn =
-                        '<div class="tweet_this_dummy"><span>' + options.services.twitter.dummy_caption +
-                            '</span></div>';
-                }
+                var twitter_code = '<iframe allowtransparency="true" frameborder="0" scrolling="no" src="' + twitter_iframe_url + '" style="width:64px; height:25px;"></iframe>';
+                var twitter_dummy_btn =
+                    '<button class="button"><i class="icon-twitter"></i> Tweet</button>';
 
                 context.append('<li class="twitter help_info"><span class="info">' + options.services.twitter.txt_info +
-                    '</span><span class="switch off">' + options.services.twitter.txt_twitter_off +
-                    '</span><div class="tweet dummy_btn">' + twitter_dummy_btn + '</div></li>');
+                    '</span>' + $switchTwitter[0].outerHTML + '<div class="tweet dummy_btn">' + twitter_dummy_btn + '</div></li>');
 
                 var $container_tw = $('li.twitter', context);
 
-                context.on('click', 'li.twitter .tweet_this_dummy,li.twitter span.switch',
+                context.on('change', 'li.twitter .switch',
                     function () {
-                        if ($container_tw.find('span.switch').hasClass('off')) {
+                        if ($container_tw.find('.switch').hasClass('off')) {
                             $container_tw.addClass('info_off');
-                            $container_tw.find('span.switch').addClass('on').removeClass('off').html(options.services.twitter.txt_twitter_on);
-                            $container_tw.find('.tweet_this_dummy').replaceWith(twitter_code);
+                            $container_tw.find('.switch').addClass('on').removeClass('off');
+                            $container_tw.find('.show-for-sr').html(options.services.twitter.txt_twitter_on);
+                            $container_tw.find('button').replaceWith(twitter_code);
                         } else {
                             $container_tw.removeClass('info_off');
-                            $container_tw.find('span.switch').addClass('off').removeClass('on').html(options.services.twitter.txt_twitter_off);
+                            $container_tw.find('.switch').addClass('off').removeClass('on');
+                            $container_tw.find('.show-for-sr').html(options.services.twitter.txt_twitter_off);
                             $container_tw.find('.tweet').html(twitter_dummy_btn);
                         }
                     }
@@ -314,28 +324,24 @@
                     '"></div><script type="text/javascript">window.___gcfg = {lang: "' +
                     options.services.gplus.language +
                     '"}; (function() { var po = document.createElement("script"); po.type = "text/javascript"; po.async = true; po.src = "https://apis.google.com/js/plusone.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(po, s); })(); </script>';
-                var gplus_dummy_btn;
-                if (options.services.gplus.dummy_img) {
-                    gplus_dummy_btn =
-                        '<img src="' + options.services.gplus.dummy_img + '" alt="+1" class="gplus_one_dummy" />';
-                } else {
-                    gplus_dummy_btn = '<div class="gplus_one_dummy">+1</div>';
-                }
+                var gplus_dummy_btn = '<button class="button"><i class="icon-google-plus"></i></button>';
+
                 context.append('<li class="gplus help_info"><span class="info">' + options.services.gplus.txt_info +
-                    '</span><span class="switch off">' + options.services.gplus.txt_gplus_off +
-                    '</span><div class="gplusone dummy_btn">' + gplus_dummy_btn + '</div></li>');
+                    '</span>' + $switchGPlus[0].outerHTML +  '<div class="gplusone dummy_btn">' + gplus_dummy_btn + '</div></li>');
 
                 var $container_gplus = $('li.gplus', context);
 
-                context.on('click', 'li.gplus div.gplusone .gplus_one_dummy,li.gplus span.switch',
+                context.on('change', 'li.gplus .switch',
                     function () {
-                        if ($container_gplus.find('span.switch').hasClass('off')) {
+                        if ($container_gplus.find('.switch').hasClass('off')) {
                             $container_gplus.addClass('info_off');
-                            $container_gplus.find('span.switch').addClass('on').removeClass('off').html(options.services.gplus.txt_gplus_on);
-                            $container_gplus.find('.gplus_one_dummy').replaceWith(gplus_code);
+                            $container_gplus.find('.switch').addClass('on').removeClass('off');
+                            $container_gplus.find('.show-for-sr').html(options.services.gplus.txt_gplus_on);
+                            $container_gplus.find('button').replaceWith(gplus_code);
                         } else {
                             $container_gplus.removeClass('info_off');
-                            $container_gplus.find('span.switch').addClass('off').removeClass('on').html(options.services.gplus.txt_gplus_off);
+                            $container_gplus.find('.switch').addClass('off').removeClass('on');
+                            $container_gplus.find('.show-for-sr').html(options.services.gplus.txt_gplus_off);
                             $container_gplus.find('.gplusone').html(gplus_dummy_btn);
                         }
                     }
@@ -346,12 +352,13 @@
             // Der Info/Settings-Bereich wird eingebunden
             //
             if (options.info_link !== "") {
-            context.append('<li class="settings_info"><div class="settings_info_menu off perma_option_off"><a href="' +
+            context.append('<li class="settings_info">' +
+                '<div class="settings_info_menu off perma_option_off"><a href="' +
                 options.info_link + '"><span class="help_info icon"><span class="info">' + options.txt_help +
                 '</span></span></a></div></li>');
             } else {
             context.append('<li class="settings_info"><div class="settings_info_menu off perma_option_off">' +
-                '<span class="help_info icon"><span class="info">' + options.txt_help +
+                '<span class="help_info icon"><i class="icon-info"></i><span class="info">' + options.txt_help +
                 '</span></span></div></li>');
             }
 
@@ -392,7 +399,7 @@
                 $container_settings_info.find('.settings_info_menu').removeClass('perma_option_off');
 
                 // Perma-Optionen-Icon (.settings) und Formular (noch versteckt) einbinden
-                $container_settings_info.find('.settings_info_menu').append('<span class="settings">Einstellungen</span><form><fieldset><legend>' +
+                $container_settings_info.find('.settings_info_menu').append('<span class="settings"><i class="icon-cog"></i><span class="show-for-sr">Einstellungen</span></span><form><fieldset><legend>' +
                     options.settings_perma + '</legend></fieldset></form>');
 
                 // Die Dienste mit <input> und <label>, sowie checked-Status laut Cookie, schreiben
@@ -459,15 +466,17 @@
                     }
                 });
 
+
                 // Dienste automatisch einbinden, wenn entsprechendes Cookie vorhanden ist
                 if (facebook_on && facebook_perma && cookies.socialSharePrivacy_facebook === 'perma_on') {
-                    $('li.facebook span.switch', context).click();
+
+                    $('li.facebook .switch', context).trigger('change').find('input').attr("checked", "checked");
                 }
                 if (twitter_on && twitter_perma && cookies.socialSharePrivacy_twitter === 'perma_on') {
-                    $('li.twitter span.switch', context).click();
+                    $('li.twitter .switch', context).trigger('change').find('input').attr("checked", "checked");
                 }
                 if (gplus_on && gplus_perma && cookies.socialSharePrivacy_gplus === 'perma_on') {
-                    $('li.gplus span.switch', context).click();
+                    $('li.gplus .switch', context).trigger('change').find('input').attr("checked", "checked");
                 }
             }
         }); // this.each(function ()
