@@ -2,7 +2,7 @@
  * jquery.socialshareprivacy.js | 2 Klicks fuer mehr Datenschutz
  *
  *
- * https://github.com/patrickheck/socialshareprivacy
+ * https://github.com/pavelleonidov/socialshareprivacy-modernized
  * http://www.heise.de/ct/artikel/2-Klicks-fuer-mehr-Datenschutz-1333879.html
  *
  * Copyright (c) 2011 Hilko Holweg, Sebastian Hilbig, Nicolas Heiringhoff, Juergen Schmidt
@@ -169,7 +169,7 @@
             'cookie_path':    '/',
             'cookie_domain':  document.location.host,
             'cookie_expires': '365',
-            'css_path':       'socialshareprivacy/socialshareprivacy.css',
+            'css_path':       'css/socialshareprivacy.min.css',
             'uri':            getURI
         };
 
