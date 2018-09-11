@@ -234,7 +234,7 @@
             //
             if (facebook_on) {
                 var fb_enc_uri = encodeURIComponent(uri + options.services.facebook.referrer_track);
-                var fb_code = '<iframe src="http://www.facebook.com/plugins/like.php?locale=' +
+                var fb_code = '<iframe src="https://www.facebook.com/plugins/like.php?locale=' +
                     options.services.facebook.language + '&amp;href=' + fb_enc_uri +
                     '&amp;send=false&amp;layout=button_count&amp;width=70&amp;show_faces=false&amp;action=' +
                     options.services.facebook.action +
@@ -285,7 +285,7 @@
 
                 var twitter_enc_uri = encodeURIComponent(uri + options.services.twitter.referrer_track);
                 var twitter_count_url = encodeURIComponent(uri);
-                var twitter_iframe_url = 'http://platform.twitter.com/widgets/tweet_button.html?url=' +
+                var twitter_iframe_url = 'https://platform.twitter.com/widgets/tweet_button.html?url=' +
                     twitter_enc_uri + '&amp;counturl=' + twitter_count_url + '&amp;text=' + text + '&amp;count=horizontal&amp;lang=' + options.services.twitter.language;
 
                 if (options.services.twitter.tweet_via !== '') {
